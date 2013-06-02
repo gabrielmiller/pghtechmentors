@@ -21,22 +21,24 @@ $defaults = array(
 );
 
 if($_POST != array()){
-    //header('Location: login.php');
-    //echo var_dump($_POST);
     foreach($_POST as $key => $value){
-        $is_not_required = ($key == "phone_primary" || $key == "phone_secondary" || $key == "about") && ($value == Null);
-        if(!$is_not_required){
+        $is_not_required = ($key == "phone_primary" || $key == "phone_secondary" || $key == "about");
+        $is_value_blank = (strlen($value) == 0);
+        if(!$is_not_required && $is_value_blank){
             array_push($errors, "$key is a required field");
         }
-        $defaults[$key] = htmlspecialchars($value); // Strip html tags
+        //$_POST[$key] = htmlspecialchars($value); // Strip html tags to send to db.
+        $defaults[$key] = htmlspecialchars($value); // Strip html tags to print them back to form if it failed.
     }
     if($_POST['password'] != $_POST['password_confirm']){
         array_push($errors, "Your password and password confirmation do not match.");
     }
+    if(count($errors) == 0){
+        # Post the values to the database
+        # Start a session
+        # Redirect the user to the profile page
+    }
 }
-
-#echo var_dump($_POST);
-#echo var_dump($defaults);
 ?>
 
 <!doctype HTML>
@@ -57,35 +59,35 @@ if($_POST != array()){
     <form id="register_form" method="post" action="register.php">
         <div>
             <label for="firstname">First Name: </label>
-            <input id="firstname" type="text" placeholder="First Name" name="name_first" value="<?php echo $defaults['name_first'];?>">
+            <input required id="firstname" type="text" placeholder="First Name" name="name_first" value="<?php echo $defaults['name_first'];?>" maxlength="255">
         </div>
         <div>
             <label for="lastname">Last Name: </label>
-            <input id="lastname" type="text" placeholder="Last Name" name="name_last" value="<?php echo $defaults['name_last'];?>">
+            <input required id="lastname" type="text" placeholder="Last Name" name="name_last" value="<?php echo $defaults['name_last'];?>" maxlength="255">
         </div>
         <div>
             <label for="email">Email Address: </label>
-            <input id="email" type="text" placeholder="name@website.com" name="email" value="<?php echo $defaults['email'];?>">
+            <input required id="email" type="text" placeholder="name@website.com" name="email" value="<?php echo $defaults['email'];?>" maxlength="255">
         </div>
         <div>
             <label for="password">Password: </label>
-            <input id="password" type="password" name="password">
+            <input required id="password" type="password" name="password">
         </div>
         <div>
             <label for="passwordconfirm">Confirm Password: </label>
-            <input id="passwordconfirm" type="password" name="password_confirm">
+            <input required id="passwordconfirm" type="password" name="password_confirm">
         </div>
         <div>
             <label for="phoneprimary">Primary Phone Number: </label>
-            <input id="phoneprimary" type="text" placeholder="(123) 456 - 7890" name="phone_primary" value="<?php echo $defaults['phone_primary'];?>">
+            <input id="phoneprimary" type="text" placeholder="(123) 456 - 7890" name="phone_primary" value="<?php echo $defaults['phone_primary'];?>" maxlength="30">
         </div>
         <div>
             <label for="phonesecondary">Secondary Phone Number: </label>
-            <input id="phonesecondary" type="text" placeholder="(123) 456 - 7890" name="phone_secondary" value="<?php echo $defaults['phone_secondary'];?>">
+            <input id="phonesecondary" type="text" placeholder="(123) 456 - 7890" name="phone_secondary" value="<?php echo $defaults['phone_secondary'];?>" maxlength="30">
         </div>
         <div>
             <label for="zip">Zip Code: </label>
-            <input id="zip" type="text" placeholder="12345" name="zip_code" value="<?php echo $defaults['zip_code'];?>">
+            <input required id="zip" type="text" placeholder="12345" name="zip_code" value="<?php echo $defaults['zip_code'];?>" maxlength="10">
         </div>
         <div>
             <label for="isavailable">Are you available: </label>
