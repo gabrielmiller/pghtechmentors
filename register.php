@@ -45,6 +45,8 @@ if($_POST != array()){
     }
 
     if(count($errors) == 0){
+        require_once("../../credentials.php");
+        $db = new mysqli($credentials['hostname'],$credentials['username'],$credentials['password'],$credentials['dbname']);
         echo "Your data was sent.";
         # Post the values to the database
         # Start a session
