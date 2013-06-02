@@ -1,7 +1,7 @@
 <?php
 
 $days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-$times = array("Morning","Afternoon","Evening");
+$times = array("Morning (before 12 PM)","Afternoon (12 PM - 5 PM)","Evening (After 5PM)");
 $errors = array();
 $defaults = array(
     'name_first' => '',
