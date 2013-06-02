@@ -45,12 +45,25 @@ if($_POST != array()){
     }
 
     if(count($errors) == 0){
-        require_once("../../credentials.php");
-        $db = new mysqli($credentials['hostname'],$credentials['username'],$credentials['password'],$credentials['dbname']);
-        echo "Your data was sent.";
         # Post the values to the database
         # Start a session
         # Redirect the user to the profile page
+        $salt = substr(md5(microtime()),rand(0,26),10);
+        $i = $_POST;
+        $i['password'] = sha1($salt.$i['password']);
+        $i['skill'] = "Web Development"
+        require_once("../../credentials.php");
+        $db = new mysqli($credentials['hostname'],$credentials['username'],$credentials['password'],$credentials['dbname']);
+        $sql = "
+            INSERT INTO `pghtechmentors`.`user` (`user_id`, `account_type`, `email_id`, `name_last`, `name_first`, `contact_home`, `contact_mobile`, `skill`, `is_available`, `zip_code`, `about_me`, `password`, `salt`) VALUES ('', 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        ";
+        //$insert = $db->stmt_init();
+        $insert = $db->prepare($sql);
+        $insert->bind_param('sssssiisss', $i['email'], $i['namelast'], $i['namefirst'], $i['contacthome'], $i['contactmobile'], $i['skill'], $i['is_available'], $i['zip_code'], $i['about'], $i['password'], $salt);
+        $insert->exec();
+        echo $insert->affected_rows." rows affected.";
+        echo "<br>error ".$insert->errno;
+        echo "<br>Your data was sent.";
     }
 }
 ?>
