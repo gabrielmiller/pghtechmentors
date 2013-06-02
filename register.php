@@ -55,11 +55,10 @@ if($_POST != array()){
         require_once("../../credentials.php");
         $db = new mysqli($credentials['hostname'],$credentials['username'],$credentials['password'],$credentials['dbname']);
         $sql = "
-            INSERT INTO `pghtechmentors`.`user` (`user_id`, `account_type`, `email_id`, `name_last`, `name_first`, `contact_home`, `contact_mobile`, `skill`, `is_available`, `zip_code`, `about_me`, `password`, `salt`) VALUES ('', 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+            INSERT INTO `pghtechmentors`.`user` (`user_id`, `account_type`, `email_id`, `name_last`, `name_first`, `contact_home`, `contact_mobile`, `skill`, `is_available`, `zip_code`, `about_me`, `passwd`, `salt`) VALUES ('', 'M', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
         ";
-        //$insert = $db->stmt_init();
         $insert = $db->prepare($sql);
-        $insert->bind_param('sssssiisss', $i['email'], $i['name_last'], $i['name_first'], $i['phone_primary'], $i['phone_secondary'], $i['skill'], $i['is_available'], $i['zip_code'], $i['about'], $i['password'], $salt);
+        $insert->bind_param('ssssssissss', $i['email'], $i['name_last'], $i['name_first'], $i['phone_primary'], $i['phone_secondary'], $i['skill'], $i['is_available'], $i['zip_code'], $i['about'], $i['password'], $salt);
         $insert->execute();
         echo $insert->affected_rows." rows affected.";
         echo "<br>error ".$insert->errno;
