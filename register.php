@@ -1,7 +1,7 @@
 <?php
 
 $days = array("Select","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-$times = array("Select","Morning","Afternoon","Evening");
+$times = array("Select","Morning (before 12 PM)","Afternoon (12 PM - 5 PM)","Evening (After 5PM)");
 $errors = array();
 $non_required_fields = array('phone_primary','phone_secondary','availability_time2','availability_day2','availiability_day3','availability_time3','about');
 $defaults = array(

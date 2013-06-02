@@ -38,3 +38,9 @@ WHERE user.user_id='$user';
 -- 4. Delete and then Insert timeslots
 DELETE FROM time_slot where user_id='$user';
 INSERT INTO pghtechmentors.user_timeslot (user_id, day_id, timeslot_id) VALUES ('1', '1', '1');
+
+-- ###### Search Mentors ####
+--- Get users from Day and Timeslot in Search
+SELECT `user_id`, `email_id`, `name_last`, `name_first`, `contact_home`, `contact_mobile`, `skill`, `is_available`, `zip_code`, `about_me`
+FROM user where user_id in (
+SELECT user_id FROM `user_timeslot` WHERE day_id=1 and timeslot_id=1);
