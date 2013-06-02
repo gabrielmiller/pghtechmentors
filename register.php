@@ -51,9 +51,9 @@ if($_POST != array()){
         $salt = substr(md5(microtime()),rand(0,26),10);
         $i = $_POST;
         if($i['is_available'] == 'on'){
-            $i['is_available'] == True
+            $i['is_available'] == True;
         }else{
-            $i['is_available'] == False
+            $i['is_available'] == False;
         }
         $i['password'] = sha1($salt.$i['password']);
         $i['skill'] = "Web Development";
