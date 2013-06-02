@@ -68,7 +68,7 @@ if($_POST != array()){
         echo $insert->affected_rows." rows affected.";
         echo "<br>error ".$insert->errno;
         echo "<br>Your data was sent.";
-        $sql2 = "SELECT user_id FROM `user` WHERE email_id = ?"
+        $sql2 = "SELECT user_id FROM `user` WHERE email_id = ?";
         $id = 0;
         $select = $db->prepare($sql2);
         $select->bind_param('s', $i['email']);
