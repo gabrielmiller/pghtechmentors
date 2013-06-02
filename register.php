@@ -1,8 +1,9 @@
 <?php
 
-$days = array("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
-$times = array("Morning","Afternoon","Evening");
+$days = array("Select","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday");
+$times = array("Select","Morning","Afternoon","Evening");
 $errors = array();
+$non_required_fields = array('phone_primary','phone_secondary','availability_time2','availability_day2','availiability_day3','availability_time3','about');
 $defaults = array(
     'name_first' => '',
     'name_last' => '',
@@ -22,18 +23,29 @@ $defaults = array(
 
 if($_POST != array()){
     foreach($_POST as $key => $value){
-        $is_not_required = ($key == "phone_primary" || $key == "phone_secondary" || $key == "about");
+        # Validate fields
+
         $is_value_blank = (strlen($value) == 0);
+        $is_not_required = in_array($non_required_fields, $key);
+
         if(!$is_not_required && $is_value_blank){
             array_push($errors, "$key is a required field");
         }
+
         //$_POST[$key] = htmlspecialchars($value); // Strip html tags to send to db.
         $defaults[$key] = htmlspecialchars($value); // Strip html tags to print them back to form if it failed.
     }
+
+    if($_POST['availability_time1'] == 0 || $_POST['availability_day1'] == 0){
+        array_push($errors, "Primary availability is required.");
+    }
+
     if($_POST['password'] != $_POST['password_confirm']){
         array_push($errors, "Your password and password confirmation do not match.");
     }
+
     if(count($errors) == 0){
+        echo "Your data was sent.";
         # Post the values to the database
         # Start a session
         # Redirect the user to the profile page
@@ -44,6 +56,7 @@ if($_POST != array()){
 <!doctype HTML>
 <html>
 <head>
+    <title>UMentor: Mentor Registration</title>
 </head>
 <body>
     <?php if($errors != array()){?>
