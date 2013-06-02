@@ -59,7 +59,7 @@ if($_POST != array()){
         ";
         //$insert = $db->stmt_init();
         $insert = $db->prepare($sql);
-        $insert->bind_param('sssssiisss', $i['email'], $i['namelast'], $i['namefirst'], $i['contacthome'], $i['contactmobile'], $i['skill'], $i['is_available'], $i['zip_code'], $i['about'], $i['password'], $salt);
+        $insert->bind_param('sssssiisss', $i['email'], $i['name_last'], $i['name_first'], $i['phone_primary'], $i['phone_secondary'], $i['skill'], $i['is_available'], $i['zip_code'], $i['about'], $i['password'], $salt);
         $insert->exec();
         echo $insert->affected_rows." rows affected.";
         echo "<br>error ".$insert->errno;
