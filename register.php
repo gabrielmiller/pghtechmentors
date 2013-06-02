@@ -51,7 +51,7 @@ if($_POST != array()){
         $salt = substr(md5(microtime()),rand(0,26),10);
         $i = $_POST;
         $i['password'] = sha1($salt.$i['password']);
-        $i['skill'] = "Web Development"
+        $i['skill'] = "Web Development";
         require_once("../../credentials.php");
         $db = new mysqli($credentials['hostname'],$credentials['username'],$credentials['password'],$credentials['dbname']);
         $sql = "
